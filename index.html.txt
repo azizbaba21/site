@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kütüphane – Kitap Arama</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      padding: 20px 0;
+      background-color: #2c3e50;
+      color: white;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+
+    .book {
+      background-color: white;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-left: 4px solid #2c3e50;
+    }
+
+    .book h3 {
+      margin: 0 0 5px 0;
+    }
+
+    .book p {
+      margin: 0;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Fatih Mtal Kütüphane</h1>
+    <p>Kitap Ara</p>
+  </header>
+
+  <input type="text" id="searchInput" placeholder="Kitap adı veya yazar girin..." onkeyup="searchBooks()" />
+
+  <div id="bookList"></div>
+
+  <script>
+    const books = [
+      { title: "Simyacı", author: "Paulo Coelho" },
+      { title: "Kürk Mantolu Madonna", author: "Sabahattin Ali" },
+      { title: "Sefiller", author: "Victor Hugo" },
+      { title: "Beyaz Diş", author: "Jack London" },
+      { title: "Suç ve Ceza", author: "Fyodor Dostoyevski" }
+    ];
+
+    function displayBooks(filteredBooks) {
+      const list = document.getElementById("bookList");
+      list.innerHTML = "";
+      if (filteredBooks.length === 0) {
+        list.innerHTML = "<p>Sonuç bulunamadı.</p>";
+        return;
+      }
+      filteredBooks.forEach(book => {
+        const div = document.createElement("div");
+        div.className = "book";
+        div.innerHTML = <h3>${book.title}</h3><p>${book.author}</p>;
+        list.appendChild(div);
+      });
+    }
+
+    function searchBooks() {
+      const input = document.getElementById("searchInput").value.toLowerCase();
+      const filtered = books.filter(book =>
+        book.title.toLowerCase().includes(input) ||
+        book.author.toLowerCase().includes(input)
+      );
+      displayBooks(filtered);
+    }
+
+    // Sayfa yüklendiğinde tüm kitapları göster
+    displayBooks(books);
+  </script>
+
+</body>
+</html>
